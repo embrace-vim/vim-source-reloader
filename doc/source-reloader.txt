@@ -1,0 +1,39 @@
+*source-reloader.txt*  <F9> Mapping to reload the current source file.
+
+Vim Source Reloader~
+
+Copier: Landon Bouma <https://tallybark.com/>
+License: https://creativecommons.org/publicdomain/zero/1.0/
+
+INTRODUCTION                                    *source-reloader*
+
+A classic Vim tip, packaged for easy installation to `~/.vim/pack`
+
+- "Source current file when editing a script"
+
+   http://vim.wikia.com/wiki/Source_current_file_when_editing_a_script
+
+COMMANDS                                        *source-reloader-commands*
+
+Press <F9> to reload the current source file.
+
+USAGE TIP                                      *source-reloader-usage-tip*
+
+I like to include the following boilerplate atop each source to remind
+myself how to reload the file.
+>
+  " YOU: Uncomment the 'unlet', then <F9> to reload this file.
+  "       https://github.com/landonb/vim-source-reloader
+  "  silent! unlet g:loaded_foo_bar
+
+  if exists("g:loaded_foo_bar") || &cp
+    finish
+  endif
+  let g:loaded_foo_bar = 1
+<
+Note that this will not always work! You might see errors if your
+source code is not reentrant, e.g., you'll want to use `function!`,
+`augroup | au! ...`, etc., to ensure your code can be re-sourced
+without complaint.
+
+ vim:tw=78:ts=8:ft=help:norl:
