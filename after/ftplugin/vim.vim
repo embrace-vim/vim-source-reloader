@@ -2,6 +2,7 @@
 " Copier: Landon Bouma <https://tallybark.com/>
 " Online: https://github.com/landonb/vim-source-reloader
 " License: https://creativecommons.org/publicdomain/zero/1.0/
+" vim:tw=0:ts=2:sw=2:et:norl:ft=vim
 
 " Copied from the excellent tip:
 " - "Source current file when editing a script"
