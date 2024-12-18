@@ -6,6 +6,14 @@
 
 " -------------------------------------------------------------------
 
+" Note this ftplugin is sourced frequently, so don't use finish guard.
+" - E.g., on `set ft=vim`.
+"
+" if exists("g:loaded_vim_source_reloader_after_vim") || &cp
+"   finish
+" endif
+" let g:loaded_vim_source_reloader_after_vim = 1
+
 " -------------------------------------------------------------------
 
 " USAGE: Open a Vim plugin file, then press F9 to source (reload) the code.
