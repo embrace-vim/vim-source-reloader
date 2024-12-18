@@ -56,5 +56,5 @@
 " Original author: Luc Hermitte, though possibly anonymous (127.0.0.1).
 
 " Press F9 to source the Vim file being edited. (#reload)
-noremap <silent><buffer> <F9> :exec 'source '.bufname('%')<CR>
+nnoremap <silent> <buffer> <F9> :exec 'source '.bufname('%')<CR>
 
