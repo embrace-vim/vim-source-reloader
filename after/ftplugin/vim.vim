@@ -65,5 +65,15 @@ function! s:CreateMap_NormalMode_F9() abort
   nnoremap <silent> <buffer> <F9> :exec 'source '.bufname('%')<CR>
 endfunction
 
+function! s:CreateMap_InsertMode_F9() abort
+  if exists('g:vim_source_reloader_disable_insert') && g:vim_source_reloader_disable_insert
+
+    return
+  endif
+
+  inoremap <silent> <buffer> <F9> <C-O>:exec 'source '.bufname('%')<CR>
+endfunction
+
 call s:CreateMap_NormalMode_F9()
+call s:CreateMap_InsertMode_F9()
 
