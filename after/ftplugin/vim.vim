@@ -4,7 +4,9 @@
 " License: https://creativecommons.org/publicdomain/zero/1.0/
 " vim:tw=0:ts=2:sw=2:et:norl:ft=vim
 
-" ========================================================================
+" -------------------------------------------------------------------
+
+" -------------------------------------------------------------------
 
 " USAGE: Open a Vim plugin file, then press F9 to source (reload) the code.
 
@@ -38,7 +40,7 @@
 "     endif
 "     let g:loaded_source_reloader = 1
 
-" ========================================================================
+" -------------------------------------------------------------------
 
 " Copied from the excellent tip:
 " - "Source current file when editing a script"
