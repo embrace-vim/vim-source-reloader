@@ -55,6 +55,15 @@
 "   http://vim.wikia.com/wiki/Source_current_file_when_editing_a_script
 " Original author: Luc Hermitte, though possibly anonymous (127.0.0.1).
 
-" Press F9 to source the Vim file being edited. (#reload)
-nnoremap <silent> <buffer> <F9> :exec 'source '.bufname('%')<CR>
+function! s:CreateMap_NormalMode_F9() abort
+  if exists('g:vim_source_reloader_disable_normal') && g:vim_source_reloader_disable_normal
+
+    return
+  endif
+
+  " Press F9 to source the Vim file being edited. (#reload)
+  nnoremap <silent> <buffer> <F9> :exec 'source '.bufname('%')<CR>
+endfunction
+
+call s:CreateMap_NormalMode_F9()
 
