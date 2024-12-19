@@ -1,39 +1,123 @@
-*source-reloader.txt*  <F9> Mapping to reload the current source file.
+*source-reloader.txt*	Quickly reload source files	2024 Dec 19
 
-Vim Source Reloader~
+VIM SOURCE RELOADER 🔃 Reload your Vim script conveniently~
 
-Copier: Landon Bouma <https://tallybark.com/>
-License: https://creativecommons.org/publicdomain/zero/1.0/
+• INTRODUCTION				|vim-source-reloader-about|
+• COMMANDS				|vim-source-reloader-commands|
+• USAGE TIP				|vim-source-reloader-usage-tip|
+• SHOUT-OUTS				|vim-source-reloader-shout-outs|
+• CAVEATS				|vim-source-reloader-caveats|
 
-INTRODUCTION                                    *source-reloader*
+==============================================================================
+INTRODUCTION				*vim-source-reloader-about*
 
-A classic Vim tip, packaged for easy installation to `~/.vim/pack`
+A classic Vim tip to make it quick and easy to source the Vim script
+you're working on:
 
 - "Source current file when editing a script"
 
    http://vim.wikia.com/wiki/Source_current_file_when_editing_a_script
 
-COMMANDS                                        *source-reloader-commands*
+==============================================================================
+COMMANDS				*vim-source-reloader-commands*
 
 Press <F9> to reload the current source file.
 
-USAGE TIP                                      *source-reloader-usage-tip*
+- Works from insert and normal modes.
 
-I like to include the following boilerplate atop each source to remind
-myself how to reload the file.
->
-  " YOU: Uncomment the 'unlet', then <F9> to reload this file.
-  "       https://github.com/landonb/vim-source-reloader
-  "  silent! unlet g:loaded_foo_bar
+- You can disable one or both commands by
+  setting global variables: >
 
-  if exists("g:loaded_foo_bar") || &cp
+  " Don't define normal mode <F9> command
+  let g:vim_source_reloader_disable_normal = 1
+
+  " Don't define insert mode <F9> command
+  let g:vim_source_reloader_disable_insert = 1
+<
+==============================================================================
+USAGE TIP				*vim-source-reloader-usage-tip*
+
+Oftentimes, you'll see code atop a Vim plugin that prevents that
+script from being sourced twice. E.g., perhaps you've see code like
+this: >
+
+  if exists("g:loaded_source_reloader") || &cp
     finish
   endif
-  let g:loaded_foo_bar = 1
+  let g:loaded_source_reloader = 1
 <
-Note that this will not always work! You might see errors if your
-source code is not reentrant, e.g., you'll want to use `function!`,
-`augroup | au! ...`, etc., to ensure your code can be re-sourced
-without complaint.
+Such code inhibits this plugin (and the |:source| command) from
+reloading those scripts.
+
+But there are a few ways to get around the guard clause so you can
+reload the file at runtime after you've made changes to it. (Skip to
+the third option for possibly the best approach.)
+
+Option 1 — Unlet the g:var~
+
+One option is to unlet the variable, either manually or by adding
+an unlet before the finish guard, e.g.: >
+
+  " Uncomment the unlet to :source this file again at runtime.
+  unlet g:loaded_source_reloader = 1
+
+  if exists("g:loaded_source_reloader") || &cp
+    finish
+  endif
+  let g:loaded_source_reloader = 1
+<
+Option 2 — Disable the finish~
+
+Another option is to (temporarily) remove or comment out the finish, e.g., >
+
+  if exists("g:loaded_source_reloader") || &cp
+    " Comment the finish (temporarily) to reload this file at runtime.
+    "finish
+  endif
+  let g:loaded_source_reloader = 1
+<
+Option 3 — Automatically unlet the g:var~
+
+A third option works automatically by checking |<sfile>|, e.g., >
+
+  if expand("%:p") ==# expand("<sfile>:p")
+    unlet g:loaded_source_reloader
+  endif
+
+  if exists("g:loaded_source_reloader") || &cp
+    finish
+  endif
+  let g:loaded_source_reloader = 1
+<
+(Props to `EasyMotion` https://github.com/easymotion/vim-easymotion
+for this approach — it's the only source file this author has seen
+that does it like that. So *savvy!*
+
+==============================================================================
+SHOUT-OUTS				*vim-source-reloader-shout-outs*
+
+The original tip may be from the venerable Luc Hermitte, who commented
+on it, but the Wiki shows it was originally posted by <127.0.0.1>.
+
+- *Source current file when editing a script*
+
+   http://vim.wikia.com/wiki/Source_current_file_when_editing_a_script
+
+==============================================================================
+CAVEATS					*vim-source-reloader-caveats*
+
+Be aware that calling |:source| will not always work!
+
+You might see errors if your source code is not reentrant.
+
+For instance:
+
+- Be sure to use |function!|, with the bang, to overwrite existing
+  functions of the same name.
+
+- Be sure to use |augroup| | |au!| ... to recreate |autocommands|.
+
+- Be sure to avoid duplicate command maps, e.g., call |unmap| or
+  |nnoremap|.
 
  vim:tw=78:ts=8:ft=help:norl:
