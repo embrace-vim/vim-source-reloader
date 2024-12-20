@@ -14,7 +14,7 @@
 " Press <F9> to source the Vim file being edited. (#reload)
 
 function! s:CreateMap_NormalMode_F9() abort
-  if exists('g:vim_source_reloader_disable_normal') && g:vim_source_reloader_disable_normal
+  if get(g:, 'vim_source_reloader_disable_normal', 0)
 
     return
   endif
@@ -23,7 +23,7 @@ function! s:CreateMap_NormalMode_F9() abort
 endfunction
 
 function! s:CreateMap_InsertMode_F9() abort
-  if exists('g:vim_source_reloader_disable_insert') && g:vim_source_reloader_disable_insert
+  if get(g:, 'vim_source_reloader_disable_insert', 0)
 
     return
   endif
