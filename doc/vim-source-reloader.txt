@@ -41,9 +41,11 @@ Oftentimes, you'll see code atop a Vim plugin that prevents that
 script from being sourced twice. E.g., perhaps you've see code like
 this: >
 
-  if exists("g:loaded_source_reloader") || &cp
+  if exists('g:loaded_source_reloader') || &cp
+
     finish
   endif
+
   let g:loaded_source_reloader = 1
 <
 Such code inhibits this plugin (and the |:source| command) from
@@ -59,34 +61,40 @@ One option is to unlet the variable, either manually or by adding
 an unlet before the finish guard, e.g.: >
 
   " Uncomment the unlet to :source this file again at runtime.
-  unlet g:loaded_source_reloader = 1
+  unlet! g:loaded_source_reloader = 1
 
-  if exists("g:loaded_source_reloader") || &cp
+  if exists('g:loaded_source_reloader') || &cp
+
     finish
   endif
+
   let g:loaded_source_reloader = 1
 <
 Option 2 — Disable the finish~
 
 Another option is to (temporarily) remove or comment out the finish, e.g., >
 
-  if exists("g:loaded_source_reloader") || &cp
+  if exists('g:loaded_source_reloader') || &cp
+
     " Comment the finish (temporarily) to reload this file at runtime.
     "finish
   endif
+
   let g:loaded_source_reloader = 1
 <
 Option 3 — Automatically unlet the g:var~
 
 A third option works automatically by checking |<sfile>|, e.g., >
 
-  if expand("%:p") ==# expand("<sfile>:p")
-    unlet g:loaded_source_reloader
+  if expand('%:p') ==# expand('<sfile>:p')
+    unlet! g:loaded_source_reloader
   endif
 
-  if exists("g:loaded_source_reloader") || &cp
+  if exists('g:loaded_source_reloader') || &cp
+
     finish
   endif
+
   let g:loaded_source_reloader = 1
 <
 (Props to `EasyMotion` https://github.com/easymotion/vim-easymotion

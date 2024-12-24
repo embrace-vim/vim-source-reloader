@@ -27,9 +27,11 @@ script from being sourced twice. E.g., perhaps you've see code like
 this:
 
   ```
-  if exists("g:loaded_source_reloader") || &cp
+  if exists('g:loaded_source_reloader') || &cp
+
     finish
   endif
+
   let g:loaded_source_reloader = 1
   ```
 
@@ -48,11 +50,13 @@ an unlet before the finish guard, e.g.:
 
   ```
   " Uncomment the unlet to :source this file again at runtime.
-  unlet g:loaded_source_reloader = 1
+  unlet! g:loaded_source_reloader = 1
 
-  if exists("g:loaded_source_reloader") || &cp
+  if exists('g:loaded_source_reloader') || &cp
+
     finish
   endif
+
   let g:loaded_source_reloader = 1
   ```
 
@@ -61,10 +65,12 @@ an unlet before the finish guard, e.g.:
 Another option is to (temporarily) remove or comment out the finish, e.g.,
 
   ```
-  if exists("g:loaded_source_reloader") || &cp
+  if exists('g:loaded_source_reloader') || &cp
+
     " Comment the finish (temporarily) to reload this file at runtime.
     "finish
   endif
+
   let g:loaded_source_reloader = 1
   ```
 
@@ -73,13 +79,15 @@ Another option is to (temporarily) remove or comment out the finish, e.g.,
 A third option works automatically by checking `<sfile>`, e.g.,
 
   ```
-  if expand("%:p") ==# expand("<sfile>:p")
-    unlet g:loaded_source_reloader
+  if expand('%:p') ==# expand('<sfile>:p')
+    unlet! g:loaded_source_reloader
   endif
 
-  if exists("g:loaded_source_reloader") || &cp
+  if exists('g:loaded_source_reloader') || &cp
+
     finish
   endif
+
   let g:loaded_source_reloader = 1
   ```
 
