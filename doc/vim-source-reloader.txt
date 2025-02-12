@@ -1,6 +1,6 @@
 *source-reloader.txt*	Quickly reload source files	2024 Dec 19
 
-VIM SOURCE RELOADER 🔃 Reload your Vim script conveniently~
+VIM SOURCE RELOADER 🔃 Reload your Vim script conveniently ~
 
 • INTRODUCTION				|vim-source-reloader-about|
 • COMMANDS				|vim-source-reloader-commands|
@@ -55,7 +55,7 @@ But there are a few ways to get around the guard clause so you can
 reload the file at runtime after you've made changes to it. (Skip to
 the third option for possibly the best approach.)
 
-Option 1 — Unlet the g:var~
+Option 1 — Unlet the g:var ~
 
 One option is to unlet the variable, either manually or by adding
 an unlet before the finish guard, e.g.: >
@@ -70,7 +70,7 @@ an unlet before the finish guard, e.g.: >
 
   let g:loaded_source_reloader = 1
 <
-Option 2 — Disable the finish~
+Option 2 — Disable the finish ~
 
 Another option is to (temporarily) remove or comment out the finish, e.g., >
 
@@ -82,7 +82,7 @@ Another option is to (temporarily) remove or comment out the finish, e.g., >
 
   let g:loaded_source_reloader = 1
 <
-Option 3 — Automatically unlet the g:var~
+Option 3 — Automatically unlet the g:var ~
 
 A third option works automatically by checking |<sfile>|, e.g., >
 
