@@ -5,20 +5,9 @@ you're working on.
 
 ## Commands
 
-Press `<F9>` to reload the current source file.
+Press `<F9>` to reload the current Vimscript or Lua source file.
 
 - Works from insert and normal modes.
-
-- You can disable one or both commands by
-  setting global variables:
-
-  ```
-  " Don't define normal mode <F9> command
-  let g:vim_source_reloader_disable_normal = 1
-
-  " Don't define insert mode <F9> command
-  let g:vim_source_reloader_disable_insert = 1
-  ```
 
 ## Usage Tip
 

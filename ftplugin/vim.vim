@@ -11,26 +11,29 @@
 
 " -------------------------------------------------------------------
 
-" Press <F9> to source the Vim file being edited. (#reload)
+" Press <F9> to source the Vimscript or Lua file being edited. (#reload)
 
-function! s:CreateMap_NormalMode_F9() abort
-  if get(g:, 'vim_source_reloader_disable_normal', 0)
-
-    return
+function! s:CreateMap_ReloadConfig_F9() abort
+  if has('nvim')
+    lua << EOF
+      vim.keymap.set({ "n", "i" }, "<F9>", function()
+        local ext = vim.fn.expand("%:e")
+        if ext == "lua" then
+          vim.cmd([[luafile %]])
+        elseif ext == "vim" then
+          vim.cmd([[exec "source " .. bufname("%")]])
+        else
+          print("Cannot reload unknown file type: " .. ext)
+        end
+      end, { desc = "Reload Luafile/Vimscript", noremap = true, silent = true })
+EOF
+  elseif expand("%:e") == "vim"
+    nnoremap <silent> <buffer> <F9> :exec 'source '.bufname('%')<CR>
+    inoremap <silent> <buffer> <F9> <C-O>:exec 'source '.bufname('%')<CR>
+  else
+    echom "Cannot reload unknown file type: " .. ext
   endif
-
-  nnoremap <silent> <buffer> <F9> :exec 'source '.bufname('%')<CR>
 endfunction
 
-function! s:CreateMap_InsertMode_F9() abort
-  if get(g:, 'vim_source_reloader_disable_insert', 0)
-
-    return
-  endif
-
-  inoremap <silent> <buffer> <F9> <C-O>:exec 'source '.bufname('%')<CR>
-endfunction
-
-call s:CreateMap_NormalMode_F9()
-call s:CreateMap_InsertMode_F9()
+call s:CreateMap_ReloadConfig_F9()
 
