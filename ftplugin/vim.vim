@@ -27,11 +27,17 @@ function! s:CreateMap_ReloadConfig_F9() abort
         end
       end, { desc = "Reload Luafile/Vimscript", noremap = true, silent = true })
 EOF
-  elseif expand("%:e") == "vim"
-    nnoremap <silent> <buffer> <F9> :exec 'source '.bufname('%')<CR>
-    inoremap <silent> <buffer> <F9> <C-O>:exec 'source '.bufname('%')<CR>
   else
-    echom "Cannot reload unknown file type: " .. ext
+    nnoremap <silent> <buffer> <F9> :call <SID>SourceBuffer()<CR>
+    inoremap <silent> <buffer> <F9> <C-O>:call <SID>SourceBuffer()<CR>
+  endif
+endfunction
+
+function! s:SourceBuffer() abort
+  if expand("%:e") == "vim"
+    exec 'source ' .. bufname('%')
+  else
+    echom "Cannot reload unknown file type: " .. expand("%:e")
   endif
 endfunction
 
